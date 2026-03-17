@@ -1,0 +1,7 @@
+.reports-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}

@@ -1,0 +1,15 @@
+.customers-page .search-box {
+  max-width: 100%;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.display-block {
+  display: block;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
