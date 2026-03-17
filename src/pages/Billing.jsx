@@ -23,8 +23,8 @@ const Billing = () => {
   const filteredProducts = useMemo(() => {
     if (!productSearch) return products;
     return products.filter(p =>
-      p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
-      p.marathiName.includes(productSearch)
+      p.name?.toLowerCase().includes(productSearch.toLowerCase()) ||
+      p.marathiName?.includes(productSearch)
     );
   }, [productSearch, products]);
 

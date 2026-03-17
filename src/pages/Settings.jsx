@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { db } from '../db/db';
 import { Database, Download, Upload, Trash2, RefreshCcw, ShieldAlert, CheckCircle2, ListPlus } from 'lucide-react';
 import Swal from 'sweetalert2';
@@ -208,24 +209,39 @@ const Settings = () => {
   };
 
   // Seed Products
-  const handleSeedProducts = async () => {
+  const handleSeedProducts = async (clearFirst = false) => {
     const result = await Swal.fire({
-      title: 'Load Shop Products?',
-      text: "This will add 80+ common grocery items to your product list. Existing products with same names might be duplicated if you don't clear them first.",
+      title: clearFirst ? 'Reset Inventory?' : 'Load Shop Products?',
+      text: clearFirst 
+        ? "This will DELETE all current products and load the 80+ default items. Continue?" 
+        : "This will add 80+ common grocery items. Continue?",
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#10B981',
-      confirmButtonText: 'Yes, Load them'
+      confirmButtonText: 'Yes, Proceed'
     });
 
     if (result.isConfirmed) {
       try {
-        await db.products.bulkAdd(DEFAULT_PRODUCTS);
-        Swal.fire('Success', 'Products added to inventory!', 'success');
+        if (clearFirst) {
+          await db.products.clear();
+        }
+        
+        // Use bulkPut and spread to ensure fresh objects without existing IDs
+        const itemsToLoad = DEFAULT_PRODUCTS.map(p => ({ ...p }));
+        await db.products.bulkPut(itemsToLoad);
+        
+        Swal.fire({
+          title: 'Success',
+          text: `${itemsToLoad.length} products loaded into inventory!`,
+          icon: 'success',
+          timer: 2000
+        });
+        
         setTimeout(() => window.location.reload(), 1500);
       } catch (error) {
         console.error('Seeding failed:', error);
-        Swal.fire('Error', 'Failed to add products.', 'error');
+        Swal.fire('Error', `Failed to add products: ${error.message}`, 'error');
       }
     }
   };
@@ -244,19 +260,29 @@ const Settings = () => {
             <div className="p-3 bg-emerald-light rounded-lg">
               <ListPlus className="text-emerald" size={24} />
             </div>
-            <h3 className="m-0">Load Standard Inventory</h3>
+            <h3 className="m-0">Inventory Setup</h3>
           </div>
           <p className="text-sm text-muted mb-6">
-            Instantly add a common list of 80+ kirana shop products (Sugar, Dal, Spices, etc.) 
-            with Devanagari (Marathi) names and demo prices.
+            Instantly populate your shop with a common list of 80+ products. 
+            Choose whether to add to existing list or start fresh.
           </p>
-          <button 
-            onClick={handleSeedProducts}
-            className="btn btn-primary w-full py-3"
-          >
-            <ListPlus size={18} />
-            Load 80+ Default Products
-          </button>
+          <div className="flex flex-col gap-2">
+            <button 
+              onClick={() => handleSeedProducts(false)}
+              className="btn btn-primary w-full py-3"
+            >
+              <ListPlus size={18} />
+              Add 80+ Products to Current
+            </button>
+            <button 
+              onClick={() => handleSeedProducts(true)}
+              className="btn btn-secondary w-full py-3"
+              style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary-dark)' }}
+            >
+              <RefreshCcw size={18} />
+              Clear & Load 80+ Products
+            </button>
+          </div>
         </div>
         {/* Backup Card */}
         <div className="card h-full">

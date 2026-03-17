@@ -32,16 +32,21 @@ const Products = () => {
       }
       
       return collection.toArray().then(arr => 
-        arr.filter(p => 
-          p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          p.marathiName.includes(searchTerm)
-        )
+        arr.filter(p => {
+          const nameMatch = p.name?.toLowerCase().includes(searchTerm.toLowerCase());
+          const marathiMatch = p.marathiName?.includes(searchTerm);
+          return nameMatch || marathiMatch;
+        })
       );
     },
     [searchTerm, categoryFilter]
   );
 
-  const categories = ['Grocery', 'Spices', 'Oils', 'Snacks', 'Personal Care', 'Cleaning', 'Other'];
+  const categories = [
+    'Grocery', 'Spices', 'Oils', 'Snacks', 'Personal Care', 
+    'Cleaning', 'Beverages', 'Dairy', 'Household', 
+    'Dry Fruits', 'Sauces', 'Spreads', 'Dessert', 'Other'
+  ];
 
   const handleOpenModal = (product = null) => {
     if (product) {
@@ -103,7 +108,7 @@ const Products = () => {
     <div className="products-page">
       <div className="page-header flex justify-between items-center mb-4">
         <div>
-          <h2>Product Inventory</h2>
+          <h2>Product Inventory ({products?.length || 0})</h2>
           <p className="text-muted">Manage all store items and prices</p>
         </div>
         <button onClick={() => handleOpenModal()} className="btn btn-primary">
