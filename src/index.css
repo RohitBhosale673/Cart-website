@@ -228,7 +228,21 @@ p { margin-bottom: 1rem; }
 .p-6 { padding: 1.5rem; }
 .shadow-sm { box-shadow: var(--shadow-sm); }
 .shadow-md { box-shadow: var(--shadow-md); }
-/* Weight Chips for Billing */
+
+/* Overflow Utilities */
+.overflow-y-auto { overflow-y: auto; }
+.overflow-hidden { overflow: hidden; }
+
+/* Display & Flex Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1; }
+.flex-none { flex: none; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.pr-2 { padding-right: 0.5rem; }
 .weight-chips {
   display: flex;
   gap: 0.5rem;
