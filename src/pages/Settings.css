@@ -1,0 +1,48 @@
+.settings-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+  border-width: 2px !important;
+}
+
+.bg-emerald-light { background: #d1fae5; }
+.bg-red-light { background: #fee2e2; }
+.bg-blue-light { background: #dbeafe; }
+
+.text-emerald { color: #10B981; }
+.text-red { color: #ef4444; }
+.text-blue { color: #3b82f6; }
+.text-slate { color: #475569; }
+
+.bg-red-white {
+  background-color: rgba(254, 242, 242, 0.5);
+}
+
+.border-red-light {
+    border-color: #fecaca !important;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.settings-page .card {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-page .card p {
+    flex-grow: 1;
+}
+
+.space-y-3 > * + * {
+    margin-top: 0.75rem;
+}

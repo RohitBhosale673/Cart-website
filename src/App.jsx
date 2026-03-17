@@ -7,6 +7,7 @@ import Products from './pages/Products';
 import Customers from './pages/Customers';
 import Billing from './pages/Billing';
 import Reports from './pages/Reports';
+import Settings from './pages/Settings';
 
 const ProtectedRoute = ({ children }) => {
   const isAuth = localStorage.getItem('isAuthenticated') === 'true';
@@ -29,6 +30,7 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="customers" element={<Customers />} />
           <Route path="reports" element={<Reports />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>

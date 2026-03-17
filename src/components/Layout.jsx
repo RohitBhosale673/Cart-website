@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Users, PackageSearch, FileText, LogOut } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Users, PackageSearch, FileText, Settings, LogOut, Database } from 'lucide-react';
 import './Layout.css';
 
 const Layout = () => {
@@ -45,9 +45,18 @@ const Layout = () => {
             <FileText size={20} />
             <span>Reports</span>
           </NavLink>
+
+          <NavLink to="/settings" className={({ isActive }) => 'nav-item ' + (isActive ? 'active' : '')}>
+            <Settings size={20} />
+            <span>Settings</span>
+          </NavLink>
         </nav>
         
         <div className="sidebar-footer">
+          <div className="db-status-bar mb-3">
+             <Database size={14} className="text-primary" />
+             <span>Local DB: <strong className="text-primary">Online</strong></span>
+          </div>
           <button onClick={handleLogout} className="btn btn-secondary logout-btn">
             <LogOut size={18} />
             Logout
